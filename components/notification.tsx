@@ -354,7 +354,7 @@ export function Notification() {
                   </p>
                   <p>
                     {
-                      "i'll joining amazon stores as a sde intern this summer, and i'm currently doing research with prof. yiping zhao (zhao nano lab) helping ship new features into a raman spectroscopy workflow used by 1500+ researchers worldwide (still can't believe i get to say that lol)."
+                      "i'll be joining amazon stores as a sde intern this summer, and i'm currently doing research with prof. yiping zhao (zhao nano lab) helping ship new features into a raman spectroscopy workflow used by 1500+ researchers worldwide (still can't believe i get to say that lol)."
                     }
                   </p>
                   <p>
