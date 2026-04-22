@@ -203,7 +203,7 @@ export function ExperienceSection() {
             color: "rgba(255,255,255,0.35)",
           }}
         >
-          // work experience
+          // where i've been
         </motion.p>
 
         <motion.h2
