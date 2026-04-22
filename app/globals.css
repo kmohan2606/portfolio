@@ -1,0 +1,355 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* Sentient — loaded from /public/fonts/ */
+@font-face {
+  font-family: 'Sentient';
+  src: url('/fonts/Sentient-Extralight.woff2') format('woff2'), url('/fonts/Sentient-Extralight.woff') format('woff');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sentient';
+  src: url('/fonts/Sentient-ExtralightItalic.woff2') format('woff2'), url('/fonts/Sentient-ExtralightItalic.woff') format('woff');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sentient';
+  src: url('/fonts/Sentient-Light.woff2') format('woff2'), url('/fonts/Sentient-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sentient';
+  src: url('/fonts/Sentient-LightItalic.woff2') format('woff2'), url('/fonts/Sentient-LightItalic.woff') format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sentient';
+  src: url('/fonts/Sentient-Regular.woff2') format('woff2'), url('/fonts/Sentient-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sentient';
+  src: url('/fonts/Sentient-Italic.woff2') format('woff2'), url('/fonts/Sentient-Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sentient';
+  src: url('/fonts/Sentient-Medium.woff2') format('woff2'), url('/fonts/Sentient-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sentient';
+  src: url('/fonts/Sentient-MediumItalic.woff2') format('woff2'), url('/fonts/Sentient-MediumItalic.woff') format('woff');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sentient';
+  src: url('/fonts/Sentient-Bold.woff2') format('woff2'), url('/fonts/Sentient-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sentient';
+  src: url('/fonts/Sentient-BoldItalic.woff2') format('woff2'), url('/fonts/Sentient-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+/* Deep Space Theme - Monochrome */
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
+  --card-foreground: #ffffff;
+  --popover: #0a0a0a;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #c0c0c0;
+  --muted: #1a1a1a;
+  --muted-foreground: #a0a0a0;
+  --accent: #c0c0c0;
+  --accent-foreground: #000000;
+  --destructive: #ff4444;
+  --destructive-foreground: #ffffff;
+  --border: #2a2a2a;
+  --input: #1a1a1a;
+  --ring: #c0c0c0;
+  --chart-1: #ffffff;
+  --chart-2: #c0c0c0;
+  --chart-3: #808080;
+  --chart-4: #606060;
+  --chart-5: #404040;
+  --radius: 0.625rem;
+  --silver: #c0c0c0;
+  --silver-light: #e0e0e0;
+  --silver-dark: #808080;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #2a2a2a;
+  --sidebar-ring: #c0c0c0;
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
+  --card-foreground: #ffffff;
+  --popover: #0a0a0a;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #c0c0c0;
+  --muted: #1a1a1a;
+  --muted-foreground: #a0a0a0;
+  --accent: #c0c0c0;
+  --accent-foreground: #000000;
+  --destructive: #ff4444;
+  --destructive-foreground: #ffffff;
+  --border: #2a2a2a;
+  --input: #1a1a1a;
+  --ring: #c0c0c0;
+  --chart-1: #ffffff;
+  --chart-2: #c0c0c0;
+  --chart-3: #808080;
+  --chart-4: #606060;
+  --chart-5: #404040;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #2a2a2a;
+  --sidebar-ring: #c0c0c0;
+}
+
+@theme inline {
+  --font-sentient: 'Sentient', serif;
+  --font-sans: var(--font-geist-mono), 'Geist Mono', monospace;
+  --font-mono: var(--font-geist-mono), 'Geist Mono', monospace;
+  --color-silver: var(--silver);
+  --color-silver-light: var(--silver-light);
+  --color-silver-dark: var(--silver-dark);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3), 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+@keyframes shooting-star {
+  0% {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(300px) translateY(300px);
+    opacity: 0;
+  }
+}
+
+@keyframes galaxy-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-galaxy {
+  animation: galaxy-rotate 120s linear infinite;
+}
+
+/* Rotating tracer border */
+@property --tracer-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes tracer-rotate {
+  to { --tracer-angle: 360deg; }
+}
+
+.tracer-border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--tracer-angle),
+    transparent 0%,
+    transparent 62%,
+    rgba(168, 85, 247, 0.4) 73%,
+    rgba(216, 180, 254, 0.85) 80%,
+    rgba(255, 255, 255, 1) 84%,
+    rgba(216, 180, 254, 0.85) 88%,
+    rgba(168, 85, 247, 0.4) 95%,
+    transparent 98%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: tracer-rotate 4s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Sci-fi HUD skill tag — deep purple core, neon violet bloom border */
+.skill-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(20,8,40,0.82);
+  border: 1px solid rgba(168,85,247,0.28);
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(168,85,247,0.18);
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  color: rgba(216,180,254,0.85) !important;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+/* Physical lift effect — symmetric 180ms ease-out on both enter and exit */
+.lift-hover {
+  transition: transform 180ms ease-out, box-shadow 180ms ease-out, border-color 180ms ease-out;
+}
+.lift-hover:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 4px 0 0 rgba(255,255,255,0.82),
+    0 4px 0 1px rgba(255,255,255,0.1),
+    0 6px 12px 1px rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.32) !important;
+}

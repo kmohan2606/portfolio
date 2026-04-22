@@ -1,19 +1,21 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# See https://help.github.com/articles/ignoring-files for more about ignoring files.
 
 # dependencies
-/node_modules
-/.pnp
+node_modules/
+.pnp
 .pnp.js
+.yarn/install-state.gz
 
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
+# next.js — build & dev cache (never commit; Vercel runs `next build` fresh)
+.next/
+out/
 
 # production
-/build
+build/
+dist/
+
+# testing
+coverage/
 
 # misc
 .DS_Store
@@ -23,10 +25,11 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 
-# local env files
-.env*.local
+# local env (Vercel injects env in the dashboard)
 .env
+.env*.local
 
 # vercel
 .vercel
@@ -34,3 +37,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# turbo (if used)
+.turbo/
+
+# IDE / OS
+.idea/
+*.swp
+*~
