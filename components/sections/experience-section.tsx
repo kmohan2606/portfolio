@@ -9,9 +9,10 @@ const experiences = [
     role: "Software Engineering Intern",
     period: "May 2026 — Aug 2026",
     points: ["Current SWE Intern on the Kindle Sync team in Seattle",
-            "Designing a full-stack internal web platform in Java to give 100+ developers self-service sync-data debugging."
+            "Designing a full-stack internal web platform in Java to give 100+ developers self-service sync-data debugging.",
             "Eliminating an existing customer data risk by architecting per-schema RBAC over 15+ data domains.",
-            "Architecting a diff engine to help 100+ engineers in surfacing data integrity issues within DynamoDB."],
+            "Architecting a diff engine to help 100+ engineers in surfacing data integrity issues within DynamoDB."
+            ],
   },
   {
     company: "Zhao Nano Lab",
