@@ -5,16 +5,6 @@ import { useRef, useState } from "react";
 
 const experiences = [
   {
-<<<<<<< HEAD
-    company: "Amazon Books | Kindle",
-    role: "Software Engineering Intern",
-    period: "May 2026 — Aug 2026",
-    points: ["Current SWE Intern on the Kindle Sync team in Seattle",
-            "Designing a full-stack internal web platform in Java to give 100+ developers self-service sync-data debugging.",
-            "Eliminating an existing customer data risk by architecting per-schema RBAC over 15+ data domains.",
-            "Architecting a diff engine to help 100+ engineers in surfacing data integrity issues within DynamoDB."
-            ],
-=======
     company: "Mabbu",
     role: "Machine Learning Intern · Python, JavaScript, REST",
     period: "May 2024 — Aug 2024",
@@ -25,7 +15,6 @@ const experiences = [
       "Fine-tuned transformer models for prospect scoring, improving lead-match accuracy by 12%",
       "Built REST APIs and React dashboards automating outreach to 500+ clients, cutting manual workload by 40%",
     ],
->>>>>>> 8cf512b7 (update fall 2026)
   },
   {
     company: "AI @ UGA Research",

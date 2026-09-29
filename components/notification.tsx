@@ -354,11 +354,7 @@ export function Notification() {
                   </p>
                   <p>
                     {
-<<<<<<< HEAD
-                      "i'll be joining amazon stores as a sde intern this summer, and i'm currently doing research with prof. yiping zhao (zhao nano lab) helping ship new features into a raman spectroscopy workflow used by 1500+ researchers worldwide (still can't believe i get to say that lol)."
-=======
                       "i was at amazon on the kindle team last summer working on the kindle sync service. prior to that, i was doing research with prof. yiping zhao at zhao nano lab. i helped ship new features into a raman spectroscopy workflow used by 1500+ researchers worldwide."
->>>>>>> 8cf512b7 (update fall 2026)
                     }
                   </p>
                   <p>
