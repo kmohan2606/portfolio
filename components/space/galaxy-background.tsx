@@ -1,9 +1,64 @@
 "use client"
 
-export function GalaxyBackground() {
-  return (
-    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+import { useSyncExternalStore } from "react"
 
+function subscribeLite(cb: () => void) {
+  const coarse = window.matchMedia("(hover: none), (pointer: coarse)")
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)")
+  const sub = () => cb()
+  coarse.addEventListener("change", sub)
+  reduce.addEventListener("change", sub)
+  return () => {
+    coarse.removeEventListener("change", sub)
+    reduce.removeEventListener("change", sub)
+  }
+}
+
+function getLiteBackground() {
+  if (typeof navigator === "undefined") return false
+  const iOS = /iP(ad|hone|od)/.test(navigator.userAgent)
+  return (
+    iOS ||
+    window.matchMedia("(hover: none), (pointer: coarse)").matches ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  )
+}
+
+export function GalaxyBackground() {
+  const lite = useSyncExternalStore(subscribeLite, getLiteBackground, () => false)
+
+  if (lite) {
+    return (
+      <div
+        className="fixed inset-0 z-0 pointer-events-none overflow-hidden"
+        style={{ contain: "strict", transform: "translateZ(0)" }}
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 180% 120% at 60% 40%, #0c0c0e 0%, #000000 55%, #000000 100%),
+              linear-gradient(
+                108deg,
+                transparent 0%,
+                transparent 22%,
+                rgba(255,255,255,0.02) 40%,
+                transparent 58%,
+                transparent 100%
+              ),
+              radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.55) 100%)
+            `,
+          }}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-0 pointer-events-none overflow-hidden"
+      style={{ transform: "translateZ(0)" }}
+    >
       {/* Deep space base — rich dark with slight depth variation */}
       <div
         className="absolute inset-0"

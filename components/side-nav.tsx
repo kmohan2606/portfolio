@@ -39,10 +39,7 @@ export function SideNav() {
 
   const handleOrb = useCallback((orb: (typeof orbs)[number]) => {
     if (orb.action === "download") {
-      const a = document.createElement("a")
-      a.href = "/resume.pdf"
-      a.download = "Kedarnath_Mohan_Resume.pdf"
-      a.click()
+      window.open("/resume.pdf", "_blank", "noopener,noreferrer")
     } else {
       scrollTo(orb.id)
     }

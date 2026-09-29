@@ -3,8 +3,14 @@
 import { motion } from "framer-motion";
 
 const specializations = [
-  "Python", "Go", "C/C++", "ML Systems", "Distributed Systems",
-  "Edge AI", "React", "Docker / K8s",
+  "Python",
+  "Go",
+  "C/C++",
+  "ML Systems",
+  "Distributed Systems",
+  "Edge AI",
+  "React",
+  "Docker / K8s",
 ];
 
 export function HeroSection() {
@@ -27,7 +33,7 @@ export function HeroSection() {
         className="text-lg md:text-xl text-silver mb-6"
         style={{ fontFamily: "var(--font-mono)" }}
       >
-        Software Engineer &amp; ML Researcher
+        fullstack &amp; ml
       </motion.p>
 
       {/* Specialization tags */}

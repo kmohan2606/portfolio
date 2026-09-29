@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useSyncExternalStore } from "react"
 
 interface Star {
   x: number
@@ -27,15 +27,32 @@ function rgba(hex: string, a: number) {
   return `rgba(${COLOR_RGB[hex] ?? "255,255,255"},${a})`
 }
 
-const STAR_COUNT  = 2500
 const SPEED_PER_MS = 0.0000324
-const TARGET_FPS  = 30
-const FRAME_BUDGET = 1000 / TARGET_FPS  // ~33ms
+
+function subscribeMotion(cb: () => void) {
+  const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
+  mq.addEventListener("change", cb)
+  return () => mq.removeEventListener("change", cb)
+}
+function getReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches
+}
+
+function subscribeCoarse(cb: () => void) {
+  const mq = window.matchMedia("(hover: none), (pointer: coarse)")
+  mq.addEventListener("change", cb)
+  return () => mq.removeEventListener("change", cb)
+}
+function getCoarsePointer() {
+  return window.matchMedia("(hover: none), (pointer: coarse)").matches
+}
 
 export function StarField() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const starsRef  = useRef<Star[]>([])
   const animRef   = useRef<number>()
+  const reducedMotion = useSyncExternalStore(subscribeMotion, getReducedMotion, () => false)
+  const coarsePointer = useSyncExternalStore(subscribeCoarse, getCoarsePointer, () => false)
 
   function randomStar(spreadZ = false): Star {
     return {
@@ -57,40 +74,65 @@ export function StarField() {
   }
 
   useEffect(() => {
+    if (reducedMotion) return
+
     const canvas = canvasRef.current
     if (!canvas) return
-    const ctx = canvas.getContext("2d")
+    const ctx = canvas.getContext("2d", { alpha: false })
     if (!ctx) return
 
+    const isIOS =
+      typeof navigator !== "undefined" &&
+      /iP(ad|hone|od)/.test(navigator.userAgent)
+    const lite = coarsePointer || isIOS
+
+    const starCount = lite ? 550 : 2500
+    const targetFps = lite ? 20 : 30
+    const frameBudget = 1000 / targetFps
+    const maxDpr = lite ? 1.25 : 2
+    const useTrailFade = !lite
+    const drawStreaks = !lite
+
     const resize = () => {
-      canvas.width  = window.innerWidth
-      canvas.height = window.innerHeight
+      const dpr = Math.min(window.devicePixelRatio || 1, maxDpr)
+      const w = Math.floor(window.innerWidth * dpr)
+      const h = Math.floor(window.innerHeight * dpr)
+      canvas.width = w
+      canvas.height = h
+      canvas.style.width = `${window.innerWidth}px`
+      canvas.style.height = `${window.innerHeight}px`
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
     resize()
-    starsRef.current = Array.from({ length: STAR_COUNT }, () => randomStar(true))
+    starsRef.current = Array.from({ length: starCount }, () => randomStar(true))
 
     let lastTime = 0
+    let running = true
 
     const draw = (timestamp: number) => {
+      if (!running) return
       animRef.current = requestAnimationFrame(draw)
 
-      // Throttle to TARGET_FPS
-      if (timestamp - lastTime < FRAME_BUDGET) return
+      if (timestamp - lastTime < frameBudget) return
       const delta = Math.min(timestamp - lastTime, 50)
       lastTime = timestamp
 
-      const W   = canvas.width
-      const H   = canvas.height
-      const cx  = W / 2
-      const cy  = H / 2
+      const W = window.innerWidth
+      const H = window.innerHeight
+      const cx = W / 2
+      const cy = H / 2
       const fov = Math.min(W, H) * 0.38
 
-      // Trail fade
-      ctx.fillStyle = "rgba(0,0,0,0.18)"
-      ctx.fillRect(0, 0, W, H)
+      if (useTrailFade) {
+        ctx.fillStyle = "rgba(0,0,0,0.18)"
+        ctx.fillRect(0, 0, W, H)
+      } else {
+        ctx.fillStyle = "#000000"
+        ctx.fillRect(0, 0, W, H)
+      }
 
       const advance = SPEED_PER_MS * delta
-      const stars   = starsRef.current
+      const stars = starsRef.current
 
       for (let i = 0; i < stars.length; i++) {
         const star = stars[i]
@@ -105,7 +147,6 @@ export function StarField() {
 
         const cur = project(star, cx, cy, fov)
 
-        // Cull off-screen
         if (
           cur.px < -W * 0.1 || cur.px > W * 1.1 ||
           cur.py < -H * 0.1 || cur.py > H * 1.1
@@ -119,11 +160,14 @@ export function StarField() {
         const dy = cur.py - prev.py
         const streakLen = Math.sqrt(dx * dx + dy * dy)
 
-        if (streakLen > 0.5 && star.z < 0.85) {
-          // Use globalAlpha instead of createLinearGradient — much cheaper
+        if (
+          drawStreaks &&
+          streakLen > 0.5 &&
+          star.z < 0.85
+        ) {
           ctx.globalAlpha = opacity * 0.85
           ctx.strokeStyle = rgba(star.color, 1)
-          ctx.lineWidth   = cur.size
+          ctx.lineWidth = cur.size
           ctx.beginPath()
           ctx.moveTo(prev.px, prev.py)
           ctx.lineTo(cur.px, cur.py)
@@ -142,31 +186,42 @@ export function StarField() {
 
     const handleResize = () => {
       resize()
-      starsRef.current = Array.from({ length: STAR_COUNT }, () => randomStar(true))
+      starsRef.current = Array.from({ length: starCount }, () => randomStar(true))
     }
     window.addEventListener("resize", handleResize)
 
     return () => {
+      running = false
       if (animRef.current) cancelAnimationFrame(animRef.current)
       window.removeEventListener("resize", handleResize)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [coarsePointer, reducedMotion])
+
+  const vignette = (
+    <div
+      className="fixed inset-0 z-[1] pointer-events-none"
+      style={{
+        background:
+          "radial-gradient(ellipse 75% 75% at 50% 50%, transparent 30%, rgba(0,0,0,0.75) 100%)",
+      }}
+    />
+  )
+
+  if (reducedMotion) {
+    return vignette
+  }
 
   return (
     <>
       <canvas
         ref={canvasRef}
         className="fixed inset-0 z-0 pointer-events-none"
-        style={{ background: "#000000" }}
-      />
-      <div
-        className="fixed inset-0 z-[1] pointer-events-none"
         style={{
-          background:
-            "radial-gradient(ellipse 75% 75% at 50% 50%, transparent 30%, rgba(0,0,0,0.75) 100%)",
+          background: "#000000",
+          contain: "strict",
         }}
       />
+      {vignette}
     </>
   )
 }

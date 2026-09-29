@@ -68,7 +68,8 @@ export function ContactSection() {
       >
         <a
           href="/resume.pdf"
-          download="Kedarnath_Mohan_Resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
           className="relative flex items-center gap-2 px-5 py-2.5 rounded-2xl lift-hover overflow-hidden"
           style={{
             fontFamily: "var(--font-mono)",
@@ -81,7 +82,7 @@ export function ContactSection() {
         >
           <span className="tracer-border" />
           <FileDown size={14} />
-          download resume
+          view resume
         </a>
       </motion.div>
 

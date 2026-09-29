@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 
 const experiences = [
   {
+<<<<<<< HEAD
     company: "Amazon Books | Kindle",
     role: "Software Engineering Intern",
     period: "May 2026 — Aug 2026",
@@ -13,22 +14,37 @@ const experiences = [
             "Eliminating an existing customer data risk by architecting per-schema RBAC over 15+ data domains.",
             "Architecting a diff engine to help 100+ engineers in surfacing data integrity issues within DynamoDB."
             ],
+=======
+    company: "Mabbu",
+    role: "Machine Learning Intern · Python, JavaScript, REST",
+    period: "May 2024 — Aug 2024",
+    enabled: true,
+    current: false,
+    points: [
+      "Consolidated 7,500+ Salesforce and internal records into unified datasets, enabling the company's first ML-driven growth pipeline",
+      "Fine-tuned transformer models for prospect scoring, improving lead-match accuracy by 12%",
+      "Built REST APIs and React dashboards automating outreach to 500+ clients, cutting manual workload by 40%",
+    ],
+>>>>>>> 8cf512b7 (update fall 2026)
   },
   {
-    company: "Zhao Nano Lab",
-    role: "Signal Processing Intern · Python, NumPy, SciPy",
-    period: "Jan 2026 — Present",
+    company: "AI @ UGA Research",
+    role: "Undergraduate Research Lead · TF Lite, XGBoost, R",
+    period: "Mar 2025 — Dec 2025",
+    enabled: true,
+    current: false,
     points: [
-      "Maintain open-source Raman spectroscopy software for 1,500+ global users",
-      "Improved SNR by smoothing spectral data via wavelet denoising",
-      "Engineered an automated normalization pipeline for heterogeneous datasets",
-      "Codified optimal default parameters through systematic benchmarking",
+      "Built an IoT system on RPi4 + Supabase with 15-minute refresh cycles",
+      "Achieved 87% R² with an XGBoost regression model + 5-fold cross-validation",
+      "Reduced inference latency to 50ms on edge hardware via quantized TF Lite models",
     ],
   },
   {
     company: "HammerHead Construction",
     role: "Software Engineering Intern · Python, Go, React, YOLOv9",
     period: "Mar 2025 — Jan 2026",
+    enabled: true,
+    current: false,
     points: [
       "Built an AI-powered system converting hand-drawn floorplans into 3D CAD models, reducing drafting time by 5–7 days",
       "Developed scalable Go/Python microservices for geometry parsing and CAD exports, improving data throughput by 40%",
@@ -37,51 +53,57 @@ const experiences = [
     ],
   },
   {
-    company: "AI @ UGA Research",
-    role: "Undergraduate Research Lead · TF Lite, XGBoost, R",
-    period: "Mar 2025 — Dec 2025",
+    company: "Zhao Nano Lab",
+    role: "Signal Processing Intern · Python, NumPy, SciPy",
+    period: "Jan 2026 — Present",
+    enabled: true,
+    current: false,
     points: [
-      "Built an IoT system on RPi4 + Supabase with 15-minute refresh cycles",
-      "Achieved 87% R² with an XGBoost regression model + 5-fold cross-validation",
-      "Reduced inference latency to 50ms on edge hardware via quantized TF Lite models",
+      "Maintain open-source Raman spectroscopy software for 1,500+ global users",
+      "Improved SNR by smoothing spectral data via wavelet denoising",
+      "Engineered an automated normalization pipeline for heterogeneous datasets",
+      "Codified optimal default parameters through systematic benchmarking",
     ],
   },
   {
-    company: "Mabbu",
-    role: "Machine Learning Intern · Python, JavaScript, REST",
-    period: "May 2024 — Aug 2024",
+    company: "Amazon",
+    role: "Software Engineering Intern",
+    period: "May 2026 — Aug 2026",
+    enabled: true,
+    current: false,
     points: [
-      "Consolidated 7,500+ Salesforce and internal records into unified datasets, enabling the company's first ML-driven growth pipeline",
-      "Fine-tuned transformer models for prospect scoring, improving lead-match accuracy by 12%",
-      "Built REST APIs and React dashboards automating outreach to 500+ clients, cutting manual workload by 40%",
+      "Upgraded a Java web app running on Tomcat to give 100+ developers self-service sync debugging.",
+      "Secured 1M+ customer records from data exposure by enforcing namespace-level access control across 15+ domains.",
+      "Removed 100% of debugging API load by adding direct cross-account DynamoDB reads secured with AWS IAM roles.",
+      "Surfaced data integrity issues by building a diff engine to compare live API data with direct DynamoDB reads.",
     ],
   },
 ];
 
+const visibleExperiences = experiences.filter((e) => e.enabled);
+
 type Exp = (typeof experiences)[0];
 
 function TimelineDot({
-  index,
+  current,
   isOpen,
 }: {
-  index: number;
+  current: boolean;
   isOpen: boolean;
 }) {
   return (
     <div
       className="w-3 h-3 rounded-full flex-shrink-0"
       style={{
-        background: index <= 1 ? "rgba(168,85,247,0.9)" : "black",
-        border:
-          index <= 1
-            ? "1px solid rgba(216,180,254,0.6)"
-            : "1px solid rgba(255,255,255,0.5)",
-        boxShadow:
-          index <= 1
-            ? "0 0 10px 3px rgba(168,85,247,0.55), 0 0 20px 6px rgba(168,85,247,0.25)"
-            : isOpen
-              ? "0 0 12px rgba(255,255,255,0.45)"
-              : "0 0 6px rgba(255,255,255,0.2)",
+        background: current ? "rgba(168,85,247,0.9)" : "black",
+        border: current
+          ? "1px solid rgba(216,180,254,0.6)"
+          : "1px solid rgba(255,255,255,0.5)",
+        boxShadow: current
+          ? "0 0 10px 3px rgba(168,85,247,0.55), 0 0 20px 6px rgba(168,85,247,0.25)"
+          : isOpen
+            ? "0 0 12px rgba(255,255,255,0.45)"
+            : "0 0 6px rgba(255,255,255,0.2)",
         transition: "box-shadow 0.3s ease",
       }}
     />
@@ -150,7 +172,7 @@ function ExperienceCard({
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: "10px",
-                color: "rgba(255,255,255,0.25)",
+                color: "#ffffff",
               }}
             >
               {exp.period}
@@ -235,18 +257,18 @@ export function ExperienceSection() {
             style={{ background: "rgba(255,255,255,0.12)" }}
           />
           <div className="space-y-6">
-            {experiences.map((exp, index) => {
+            {visibleExperiences.map((exp, index) => {
               const isOpen = openIndex === index;
               return (
                 <motion.div
-                  key={index}
+                  key={exp.company}
                   initial={{ opacity: 0, x: -12 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.5, delay: index * 0.08 + 0.15 }}
                   className="relative flex gap-4 items-start"
                 >
                   <div className="relative z-10 flex flex-col items-center w-3 flex-shrink-0 pt-1">
-                    <TimelineDot index={index} isOpen={isOpen} />
+                    <TimelineDot current={exp.current} isOpen={isOpen} />
                   </div>
                   <div className="min-w-0 flex-1 pb-1">
                     <span
@@ -254,7 +276,7 @@ export function ExperienceSection() {
                       style={{
                         fontFamily: "var(--font-mono)",
                         fontSize: "10px",
-                        color: "rgba(255,255,255,0.3)",
+                        color: "#ffffff",
                       }}
                     >
                       {exp.period.split("—")[0].trim()}
@@ -297,23 +319,21 @@ export function ExperienceSection() {
             }}
           />
 
-          {experiences.map((exp, index) => {
-            const isAbove = index % 2 === 0;
+          {visibleExperiences.map((exp, index) => {
             const isOpen = openIndex === index;
 
             return (
               <motion.div
-                key={index}
-                initial={{ opacity: 0, y: isAbove ? -30 : 30 }}
+                key={exp.company}
+                initial={{ opacity: 0, y: -24 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.55, delay: index * 0.12 + 0.2 }}
                 className="relative flex-1 min-w-0 flex flex-col items-center"
               >
                 <div
                   style={{
-                    order: isAbove ? 1 : 3,
-                    marginBottom: isAbove ? "20px" : 0,
-                    marginTop: isAbove ? 0 : "20px",
+                    order: 1,
+                    marginBottom: "20px",
                     width: "100%",
                     paddingLeft: "6px",
                     paddingRight: "6px",
@@ -334,15 +354,14 @@ export function ExperienceSection() {
                     style={{
                       fontFamily: "var(--font-mono)",
                       fontSize: "10px",
-                      color: "rgba(255,255,255,0.3)",
-                      top: isAbove ? "20px" : "auto",
-                      bottom: isAbove ? "auto" : "20px",
+                      color: "#ffffff",
+                      top: "20px",
                     }}
                   >
                     {exp.period.split("—")[0].trim()}
                   </span>
 
-                  <TimelineDot index={index} isOpen={isOpen} />
+                  <TimelineDot current={exp.current} isOpen={isOpen} />
                 </div>
               </motion.div>
             );
